@@ -41,7 +41,6 @@ class Stamina:
                self.is_exhausted=True
                print("you are exhausted")
           return True   
-     def heal_stamina(self,amount)  
      def activity(self,activity):
           if activity=="don't move":
               self.current_regen_rate=self.base_regen_rate*1.5
@@ -51,3 +50,4 @@ class Stamina:
           if self.current_stamina>10:
                self.is_exhausted=False
           return False
+     
