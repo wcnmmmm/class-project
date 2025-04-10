@@ -1,13 +1,65 @@
 
-import time
+import time,sys,random
 
 def slow_print(text, delay=0.05):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(delay)
     print()
+player = {
+    "hp": 100,
+    "max_hp": 100,
+    "potions": 2
+}
 
-def intro():
+game_state = {
+    "clues": 0
+}
+
+def combat(enemy_name, enemy_hp, enemy_attack):
+    slow_print(f"\n[Combat] You are attacked by {enemy_name}!")
+    while enemy_hp > 0 and player["hp"] > 0:
+        slow_print(f"\nYour HP: {player['hp']} | {enemy_name}'s HP: {enemy_hp}")
+        print("1. Attack")
+        print("2. Defend")
+        print("3. Use Healing Potion (You have: {})".format(player["potions"]))
+        action = input("Choose your action (1/2/3): ").strip()
+
+        if action == "1":
+            damage = random.randint(20, 30)
+            enemy_hp -= damage
+            slow_print(f"You strike {enemy_name} and deal {damage} damage!")
+        elif action == "2":
+            slow_print("You brace yourself for the enemys attack.")
+        elif action == "3":
+            if player["potions"] > 0:
+                heal = random.randint(25, 40)
+                player["hp"] = min(player["max_hp"], player["hp"] + heal)
+                player["potions"] -= 1
+                slow_print(f"You drink a potion and recover {heal} HP!")
+            else:
+                slow_print("You're out of potions!")
+                continue
+        else:
+            slow_print("Invalid input.")
+            continue
+
+        if enemy_hp > 0:
+            enemy_dmg = random.randint(enemy_attack - 5, enemy_attack + 5)
+            if action == "2":
+                enemy_dmg //= 2
+                slow_print("Your defense reduces incoming damage!")
+            player["hp"] -= enemy_dmg
+            slow_print(f"{enemy_name} hits you for {enemy_dmg} damage!")
+
+    if player["hp"] <= 0:
+        slow_print("You collapse... the darkness consumes you.")
+        slow_print("[BAD ENDING] - Died in Echo Town")
+        sys.exit()
+    else:
+        slow_print(f"You defeated {enemy_name}!")
+
+def chapter_one():
     slow_print("It's late at night, and it's raining heavily. You're driving an old car on an unfamiliar mountain road...")
     time.sleep(1)
     slow_print("Suddenly, the car shuddered—and stalled.")
@@ -53,5 +105,97 @@ def first_night():
 
 def second_day():
     slow_print("\nThe next morning, you go downstairs and find that the boss of the hotel front desk yesterday is gone... No one remembers him.")
-    slow_print("You are the only one who still remembers those eyes。")
+    slow_print("You are the only one who still remembers those eyes。") 
 
+def chapter_two():
+    slow_print("\n[Chapter Two: The Fog of Clues]")
+    slow_print("Morning. But there is no sun—only thick fog and silence.")
+    slow_print("Determined, you leave the inn and begin investigating.")
+    slow_print("You notice...")
+    slow_print(" - Broken windows with blood trails.")
+    slow_print(" - Strange symbols scrawled on the walls.")
+    slow_print(" - A torn note in the gutter: When the bell tolls, they awaken." )
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
+
+    slow_print("\nYou hear a growl. A mutated dog leaps from the shadows!")
+    combat("Mutated Hound", enemy_hp=40, enemy_attack=15)
+
+    slow_print("It drops a piece of parchment before vanishing into the mist.")
+    slow_print("It reads: They return... for the guilty... when midnight falls.")
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
+
+    choice = input("Do you go to the abandoned 'Church' or the haunted 'Mansion'? ").strip().lower()
+    if choice == "church":
+        church()
+    elif choice == "mansion":
+        mansion()
+    else:
+        slow_print("You wander aimlessly and lose precious time. The mist thickens...")
+        sys.exit()
+
+def church():
+    slow_print("\n[Abandoned Church]")
+    slow_print("You push open the heavy doors. Inside, ruined pews and shattered glass.")
+    slow_print("Behind the altar, a stone tablet etched with grotesque sigils reads:")
+    slow_print("Darkness stirs at the bells final chime. The town remembers its dead.’")
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
+    input("\n(Press Enter to continue)")
+
+def mansion():
+    slow_print("\n[Haunted Mansion]")
+    slow_print("The door creaks open into damp rot and silence.")
+    slow_print("A portrait stares down from above a fireplace—its eyes lifelike and hollow.")
+    slow_print("Behind it, a scrap of paper: The guilty walk among us still.")
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
+    input("\n(Press Enter to continue)")
+
+def chapter_three():
+    slow_print("\n[Chapter Three: Awakening the Dead]")
+    slow_print("The bell tolls—midnight.")
+    slow_print("Echoes pulse through the ground as you follow clues to the town’s ancient bell tower.")
+    slow_print("Inside, the air is thick with dread. Bloodstained sigils pulse on the walls.")
+    slow_print("A hooded figure emerges from the dark—a cursed guardian!")
+    combat("Cursed Sentinel", enemy_hp=80, enemy_attack=25)
+
+    slow_print("The guardian falls. A strange key drops from its cloak.")
+    slow_print("It reads: Tower Core—the heart of the curse.")
+    input("\n(Press Enter to continue)")
+    final_decision()
+
+def final_decision():
+    slow_print("\n[Final Choice]")
+    slow_print("Atop the tower, you face the Heart of the Bell—a grotesque, pulsing relic.")
+    slow_print("You must choose:")
+    print("1. Destroy it and end the curse. [Type: destroy]")
+    print("2. Sacrifice yourself to seal it. [Type: sacrifice]")
+    print("3. Use your clues to break the spell. [Type: uncover]")
+
+    choice = input("Your choice: ").strip().lower()
+
+    if choice == "destroy":
+        slow_print("You smash the relic. The tower collapses, and the curse fades into the night.")
+        slow_print("[TRUE ENDING] - Curse Broken")
+    elif choice == "sacrifice":
+        slow_print("You kneel before the relic and offer your blood. The curse is sealed once more.")
+        slow_print("[HERO ENDING] - Silent Savior")
+    elif choice == "uncover":
+        slow_print("You arrange the clues, unlocking the truth. The souls are freed with understanding.")
+        slow_print("[SECRET ENDING] - Redemption")
+    else:
+        slow_print("You hesitate. The relic devours your soul.")
+        slow_print("[BAD ENDING] - Lost Forever")
+    sys.exit()
+
+def start_game():
+    slow_print("Welcome to Echo Town: Shadows Return...", 0.06)
+    chapter_one()
+    chapter_two()
+    chapter_three()
+
+if __name__ == "__main__":
+    start_game()
+chapter_one()
