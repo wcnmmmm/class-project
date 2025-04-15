@@ -94,7 +94,7 @@ def first_night():
     elif choice == "peek":
         slow_print("You quietly opened the door, and a pair of pale eyes were looking at you...")
         slow_print("A hand suddenly reached in - you could never close the door again.")
-        slow_print("【Bad Ending -chosen one】")
+        slow_print("【Bad Ending -Curious man】")
     elif choice == "hide":
         slow_print("You hid under the bed, holding your breath. The door opened, and footsteps moved back and forth in the room... and finally left.")
         slow_print("You survived, but fear began to creep in.")
@@ -110,28 +110,43 @@ def second_day():
 def chapter_two():
     slow_print("\n[Chapter Two: The Fog of Clues]")
     slow_print("Morning. But there is no sun—only thick fog and silence.")
-    slow_print("Determined, you leave the inn and begin investigating.")
-    slow_print("You notice...")
-    slow_print(" - Broken windows with blood trails.")
-    slow_print(" - Strange symbols scrawled on the walls.")
-    slow_print(" - A torn note in the gutter: When the bell tolls, they awaken." )
-    game_state["clues"] += 1
-    slow_print("[Clue Found +1]")
-
-    slow_print("\nYou hear a growl. A mutated dog leaps from the shadows!")
-    combat("Mutated Hound", enemy_hp=40, enemy_attack=15)
-
-    slow_print("It drops a piece of parchment before vanishing into the mist.")
-    slow_print("It reads: They return... for the guilty... when midnight falls.")
-    game_state["clues"] += 1
-    slow_print("[Clue Found +1]")
-
-    choice = input("Do you go to the abandoned 'Church' or the haunted 'Mansion'? ").strip().lower()
-    if choice == "church":
-        church()
-    elif choice == "mansion":
-        mansion()
+    slow_print("Determined, you leave the inn and try to leave the town and find car")
+    slow_print("The town is shrouded in perennial fog, and you feel uncomfortable walking in the fog.")
+    choice=input("what are you going to do?*(go back to town, still walk in the fog )")
+    if choice== "go back to town":
+        slow_print("You successfully left the fog, and the looming figures in the fog made you feel lucky to have left the fog. ")
+        back_town()
+    elif choice=="still walk in the fog":
+        slow_print("You slowly get lost in the fog, and like those natives, you stay in this town forever.")
+        slow_print("【Bad Ending - Man in the Mist】")
     else:
+        slow_print("You hesitated, and because you stayed in the fog for too long, you were trapped in the fog and could never get out. ")
+        slow_print("【Bad Ending - Man in the Mist】")
+    
+    def back_town():
+       slow_print("you have to leave the town, your wife and children are waiting for you in home")
+       slow_print("After you back to hotile")
+       slow_print("You notice...")
+       slow_print(" - Broken windows with blood trails.")
+       slow_print(" - Strange symbols scrawled on the walls.")
+       slow_print(" - A torn note in the gutter: When the bell tolls, they awaken." )
+       game_state["clues"] += 1
+       slow_print("[Clue Found +1]")
+
+       slow_print("\nYou hear a growl. A mutated dog leaps from the shadows!")
+       combat("Mutated Hound", enemy_hp=40, enemy_attack=15)
+
+       slow_print("It drops a piece of parchment before vanishing into the mist.")
+       slow_print("It reads: They return... for the guilty... when midnight falls.")
+       game_state["clues"] += 1
+       slow_print("[Clue Found +1]")
+
+       choice = input("Do you go to the abandoned 'Church' or the haunted 'Mansion'? ").strip().lower()
+       if choice == "church":
+        church()
+       elif choice == "mansion":
+        mansion()
+       else:
         slow_print("You wander aimlessly and lose precious time. The mist thickens...")
         sys.exit()
 
