@@ -72,7 +72,7 @@ def chapter_one():
     else:
         slow_print("You chose to stay in the car... Soon after, a sharp scream pierced the night sky. You never left the mountain road.")
         slow_print("【Bad Ending】")
-
+        sys.exit()
 def enter_town():
     slow_print("You walk into town and the rain taps on your back like cold fingers.")
     slow_print("The town was unusually quiet, with only one street lamp still flickering an eerie light.")
@@ -87,22 +87,26 @@ def first_night():
     time.sleep(1)
     slow_print("You hear footsteps in the hallway")
     choice = input("What are you going to do? (lock door / peek / hide) ").strip().lower()
+  
     if choice =="lock door":
         slow_print("You locked the door. The footsteps stopped outside the door and didn't leave for a long time...")
         slow_print("You survived, at least for tonight.")
         second_day()
+   
     elif choice == "peek":
         slow_print("You quietly opened the door, and a pair of pale eyes were looking at you...")
         slow_print("A hand suddenly reached in - you could never close the door again.")
         slow_print("【Bad Ending -Curious man】")
+        sys.exit()
     elif choice == "hide":
         slow_print("You hid under the bed, holding your breath. The door opened, and footsteps moved back and forth in the room... and finally left.")
         slow_print("You survived, but fear began to creep in.")
         second_day()
+   
     else:
         slow_print("You hesitate... The door slowly opens in front of you. Darkness floods into your world, and you can't do anything.")
         slow_print("【Bad Ending - Hesitation means death")
-
+        sys.exit()
 def second_day():
     slow_print("\nThe next morning, you go downstairs and find that the boss of the hotel front desk yesterday is gone... No one remembers him.")
     slow_print("You are the only one who still remembers those eyes。") 
@@ -113,40 +117,57 @@ def chapter_two():
     slow_print("Determined, you leave the inn and try to leave the town and find car")
     slow_print("The town is shrouded in perennial fog, and you feel uncomfortable walking in the fog.")
     choice=input("what are you going to do?*(go back to town, still walk in the fog )")
+   
     if choice== "go back to town":
         slow_print("You successfully left the fog, and the looming figures in the fog made you feel lucky to have left the fog. ")
         back_town()
+   
     elif choice=="still walk in the fog":
         slow_print("You slowly get lost in the fog, and like those natives, you stay in this town forever.")
         slow_print("【Bad Ending - Man in the Mist】")
+        sys.exit()
     else:
         slow_print("You hesitated, and because you stayed in the fog for too long, you were trapped in the fog and could never get out. ")
         slow_print("【Bad Ending - Man in the Mist】")
     
-    def back_town():
-       slow_print("you have to leave the town, your wife and children are waiting for you in home")
-       slow_print("After you back to hotile")
-       slow_print("You notice...")
-       slow_print(" - Broken windows with blood trails.")
-       slow_print(" - Strange symbols scrawled on the walls.")
-       slow_print(" - A torn note in the gutter: When the bell tolls, they awaken." )
-       game_state["clues"] += 1
-       slow_print("[Clue Found +1]")
+def back_town():
+    slow_print("you have to leave the town, your wife and children are waiting for you in home")
+    slow_print("After you back to hotile")
+    slow_print("The girl sweeping the floor in the hotel is amazed that you survived")
+    slow_print("She says you're the first person she's ever seen alive after midnight")
+    slow_print("Her words make you sense something is wrong")
+    choice=input("what are you going to do?(ask her for her alive, keep silence):")
+    if choice=="ask her for her alive":
+        slow_print("Her face grew pale, and an unnatural look appeared on her face")
+        slow_print("she kill you")
+        slow_print("【Bad Ending -Why Am I Alive】")
+        sys.exit()
+    if choice=="keep silence":
+        slow_print("Luckily, you survived again")
+    slow_print("you walk out of the hotle and walking on the street")
+    slow_print("The streets are empty and there are faint figures in the houses, but you think it's unlikely that there are any living people in this town")
+    slow_print("You notice...")
+    slow_print(" - Broken windows with blood trails.")
+    slow_print(" - Strange symbols of bell scrawled on the walls.")
+    slow_print(" - A torn note in the gutter: When the bell tolls, they awaken." )
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
 
-       slow_print("\nYou hear a growl. A mutated dog leaps from the shadows!")
-       combat("Mutated Hound", enemy_hp=40, enemy_attack=15)
+    slow_print("\nYou hear a growl. A mutated dog leaps from the shadows!")
+    combat("Mutated Hound", enemy_hp=40, enemy_attack=15)
 
-       slow_print("It drops a piece of parchment before vanishing into the mist.")
-       slow_print("It reads: They return... for the guilty... when midnight falls.")
-       game_state["clues"] += 1
-       slow_print("[Clue Found +1]")
+    slow_print("It drops a piece of parchment before vanishing into the mist.")
+    slow_print("It reads: They return... for the guilty... when midnight falls.")
+    game_state["clues"] += 1
+    slow_print("[Clue Found +1]")
 
-       choice = input("Do you go to the abandoned 'Church' or the haunted 'Mansion'? ").strip().lower()
-       if choice == "church":
+    choice = input("Do you go to the abandoned 'Church' or the haunted 'Mansion'? ").strip().lower()
+      
+    if choice == "church":
         church()
-       elif choice == "mansion":
+    elif choice == "mansion":
         mansion()
-       else:
+    else:
         slow_print("You wander aimlessly and lose precious time. The mist thickens...")
         sys.exit()
 
@@ -154,7 +175,7 @@ def church():
     slow_print("\n[Abandoned Church]")
     slow_print("You push open the heavy doors. Inside, ruined pews and shattered glass.")
     slow_print("Behind the altar, a stone tablet etched with grotesque sigils reads:")
-    slow_print("Darkness stirs at the bells final chime. The town remembers its dead.’")
+    slow_print("Darkness stirs at the bells final chime. The town remembers its dead.")
     game_state["clues"] += 1
     slow_print("[Clue Found +1]")
     input("\n(Press Enter to continue)")
